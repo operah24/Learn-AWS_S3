@@ -20,7 +20,7 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ secrets.AWS_REGION }}
           role-duration-seconds: 3600
-          role-session-name: application-s3-role
+          role-session-name: github-actions
 
       - name: Login to Amazon ECR
         run: |
