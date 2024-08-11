@@ -17,16 +17,16 @@ const upload = multer({ dest: 'uploads/' });
 
 const stsClient = new STSClient({ region: process.env.AWS_REGION }); 
 
-async function assumeRole() {
-    const params = {
-        RoleArn: process.env.ROLE_ARN, 
-        RoleSessionName: process.env.ROLE_SESSION_NAME, 
-    };
+// async function assumeRole() {
+//     const params = {
+//         RoleArn: process.env.ROLE_ARN, 
+//         RoleSessionName: process.env.ROLE_SESSION_NAME, 
+//     };
 
-    const command = new AssumeRoleCommand(params);
-    const data = await stsClient.send(command);
-    return data.Credentials;
-}
+//     const command = new AssumeRoleCommand(params);
+//     const data = await stsClient.send(command);
+//     return data.Credentials;
+// }
 
 
 app.post('/upload', upload.single('image'), async (req, res) => {
@@ -36,11 +36,11 @@ app.post('/upload', upload.single('image'), async (req, res) => {
         
         const s3Client = new S3Client({
             region: process.env.AWS_REGION,
-            credentials: {
-                accessKeyId: creds.AccessKeyId,
-                secretAccessKey: creds.SecretAccessKey,
-                sessionToken: creds.SessionToken,
-            },
+            // credentials: {
+            //     accessKeyId: creds.AccessKeyId,
+            //     secretAccessKey: creds.SecretAccessKey,
+            //     sessionToken: creds.SessionToken,
+            // },
         });
 
         
@@ -65,6 +65,10 @@ app.post('/upload', upload.single('image'), async (req, res) => {
         console.error('Error uploading image:', err);
         res.status(500).json({ error: 'Failed to upload image' });
     }
+});
+
+app.get('/', async(req, res)=> {
+    res.json("hello world")
 });
 
 // Start the server
