@@ -32,7 +32,7 @@ const stsClient = new STSClient({ region: process.env.AWS_REGION });
 app.post('/upload', upload.single('image'), async (req, res) => {
     try {
         
-        const creds = await assumeRole();
+        // const creds = await assumeRole();
         
         const s3Client = new S3Client({
             region: process.env.AWS_REGION,
